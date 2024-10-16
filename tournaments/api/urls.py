@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import (GameViewSet, 
+from api.views import (GameViewSet, 
                     LeagueViewSet, 
                     MatchViewSet,
                     TeamViewSet, 

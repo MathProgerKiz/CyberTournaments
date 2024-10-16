@@ -1,6 +1,8 @@
+from rest_framework.response import Response
 from rest_framework import viewsets
 from drf_spectacular.utils import extend_schema
-from tournaments.serializers import (
+from rest_framework.decorators import action
+from Cyber.tournaments.api.serializers import (
     GameSerializers, 
     LeagueSerializers,
     MatchSerializers, 
@@ -14,8 +16,6 @@ from tournaments.models import (
     Team, 
     Tournament,
 )
-
-
 
 @extend_schema(tags=['Game'])
 class GameViewSet(viewsets.ModelViewSet):
@@ -41,6 +41,12 @@ class TeamViewSet(viewsets.ModelViewSet):
 class TournamentViewSet(viewsets.ModelViewSet):
     queryset = Tournament.objects.all()
     serializer_class = TournamentSerializers
+
+    @action(detail=True, methods=['get'])
+    def tournament_date(self,request):
+        """Данный метод выводит все турниры которые начинаются в определенное время"""
+        return  Response({'tournament':Tournament.objects.filter(start_date = request.date)})
+
 
 
 
